@@ -1,0 +1,145 @@
+
+body {
+    font-family: verdana;
+    background-color: #121212;
+}
+
+
+.bi-film {
+    font-size: 36px;
+    margin: 2px 5px;
+    color: #FFD700;
+}
+
+
+#movie_name {
+    background-color: #121212;
+    color: #FFD700;
+    border: 2px solid #FFD700;
+}
+#movie_name::placeholder{
+    color: #ffffff;
+}
+
+#submit_button {
+    background-color: #E50914;
+    color: #ffffff;
+    border-style: none;
+}
+
+.navbar {
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    height: 10vh;
+    width: 100%;
+}
+
+.navbar a{
+    background-color: #121212;
+    color: #FFD700  !important;
+    font-size: 20px;
+}
+.nav-item {
+    font-weight: 700;
+    border-bottom: 3px solid #121212;
+    transition: 0.2s;
+}
+.nav-item:hover {
+    color: #a44897;
+    border-bottom: 3px solid #FFD700 ;
+    
+}
+
+.dropdown-menu {
+    background-color: #121212;
+    border: 3px solid #FFD700 ;
+}
+.dropdown-menu li a{
+    font-weight: 650;
+    transition: 0.2s;
+}
+
+
+
+
+
+
+#image_container {
+    display: grid;
+    grid-template-columns: repeat(5 , 1fr);
+    gap: 5%;
+    justify-items: center;
+    margin: auto 10px;
+    margin-top: 10vh;
+}
+.movie_overlay {
+    background-color: rgb(0, 0, 0);
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    transition: 0.2s;
+    cursor: pointer;
+    border: 3px solid #10498e;
+}
+
+
+.movie_div {
+    position: relative;
+    height: 295px;
+    width: 210px;
+}
+
+@media(max-width: 1315px){
+    #image_container{
+        grid-template-columns: repeat(4 , 1fr);
+    }
+}
+
+@media(max-width: 1000px){
+    #image_container{
+        grid-template-columns: repeat(3 , 1fr);
+    }
+}
+
+@media(max-width: 715px){
+    #image_container{
+        grid-template-columns: repeat(2 , 1fr);
+    }
+}
+
+@media(max-width: 460px){
+    #image_container{
+        grid-template-columns: repeat(1 , 1fr);
+        gap: 2%;
+    }
+}
+
+
+#rated_movie_image {
+    width: 25%;
+    float: left;
+    margin: 15px;
+}
+
+#rated_movie_name {
+    font-size: 42px;
+    text-align: center;
+}
+
+
+#rated_movie_summery {
+    font-size: 20px;
+}
+
+
