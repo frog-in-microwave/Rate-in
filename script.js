@@ -19,8 +19,13 @@ async function fetch_it_up(movie_name) {
     display_movies(movie_list);
 }
 
+async function fetch_genres_up() {
+    let raw = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=bb6d40f1ec23736b063916ee085c0e95&with_genres=28&language=en-US&page=1`);
+    let movie_list = await raw.json();
+    console.log(movie_list);
+}
 
-
+fetch_genres_up();
 
 
 function display_movie_stats(movie){
