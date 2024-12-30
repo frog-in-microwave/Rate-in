@@ -92,11 +92,10 @@ pick_movies("horror");
 
 
 async function fetch_it_up(movie_name) {
-    let raw = await fetch(`https://api.tvmaze.com/search/shows?q=${movie_name}`);
+    let raw = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=bb6d40f1ec23736b063916ee085c0e95&query=${encodeURIComponent(movie_name)}`);
     let movie_list = await raw.json();
     document.getElementById("image_container").style.aspectRatio = "3 / 1" ;
-    display_movies(movie_list , "image_container");
-    console.log(movie_list);
+    display_genre_movies(movie_list , "image_container");
 }
 
 
