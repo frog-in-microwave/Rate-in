@@ -282,6 +282,8 @@ a {
 #original_title , #rated_movie_webchannel , #rated_movie_type , #rated_movie_lang , #rated_movie_genres{
     font-size: 32px;
     margin-top: 3vh;
+    margin-left: 15px;
+    margin-right: 15px;
     color: #ffffff;
     font-weight: 600;
     font-size: 24;
