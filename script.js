@@ -30,13 +30,13 @@ const genres = {
 };
 
 
-window.addEventListener("load" , () => {
-    document.querySelector(".loader").style.display = "none";
-})
+
+window.addEventListener('load' , function(){
+    document.getElementById("preloader").style.display = "none";
+});
 
 
-
-if(window.location == "http://127.0.0.1:5500/movie_rating.html"){
+if(window.location == "http://127.0.0.1:5500/movie_rating.html" || window.location == "https://ratin-movies.netlify.app/movie_rating.html"){
     if(localStorage.getItem("tvmaze") == "true"){
         change_movie_info_tvmaze(JSON.parse(localStorage.getItem("movie_to_display_ratings")));
         console.log(JSON.parse(localStorage.getItem("movie_to_display_ratings")));
