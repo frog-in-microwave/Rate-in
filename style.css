@@ -328,6 +328,8 @@ a {
 @media(max-width: 715px){
     .image_container{
         grid-template-columns: repeat(2 , 1fr);
+        gap: 1%;
+        margin-bottom: 10%;
     }
     #rated_movie_image {
         width: 70%;
