@@ -6,7 +6,35 @@ let action_movies = [];
 let drama_movies = [];
 let comedy_movies = [];
 let horror_movies = [];
-let genres_list = [['Action', 28] , ['Adventure', 12] , ['Animation', 16] , ['Comedy', 35] , ['Crime', 80] , ['Documentary', 99] , ['Drama', 18] , ['Family', 10751] , ['Fantasy', 14] , ['Horror', 27]];
+const genres = {
+    28: "Action",
+    12: "Adventure",
+    16: "Animation",
+    35: "Comedy",
+    80: "Crime",
+    99: "Documentary",
+    18: "Drama",
+    10751: "Family",
+    14: "Fantasy",
+    36: "History",
+    27: "Horror",
+    10402: "Music",
+    9648: "Mystery",
+    10749: "Romance",
+    878: "Science Fiction",
+    10770: "TV Movie",
+    53: "Thriller",
+    10752: "War",
+    37: "Western",
+    10759: "Action & Adventure"
+};
+
+
+window.addEventListener("load" , () => {
+    document.querySelector(".loader").style.display = "none";
+})
+
+
 
 if(window.location == "http://127.0.0.1:5500/movie_rating.html"){
     if(localStorage.getItem("tvmaze") == "true"){
@@ -23,7 +51,22 @@ document.getElementById("submit_button").addEventListener("click" , (event) => {
     fetch_it_up(document.getElementById("movie_name").value);
 });
 
-
+document.getElementById("action_change_suggestion").addEventListener("click" , () => {
+    
+    pick_movies("action");
+})
+document.getElementById("drama_change_suggestion").addEventListener("click" , () => {
+    
+    pick_movies("drama");
+})
+document.getElementById("comedy_change_suggestion").addEventListener("click" , () => {
+    
+    pick_movies("comedy");
+})
+document.getElementById("horror_change_suggestion").addEventListener("click" , () => {
+    
+    pick_movies("horror");
+})
 
 
 pick_movies("action");
@@ -51,6 +94,7 @@ pick_movies("horror");
 async function fetch_it_up(movie_name) {
     let raw = await fetch(`https://api.tvmaze.com/search/shows?q=${movie_name}`);
     let movie_list = await raw.json();
+    document.getElementById("image_container").style.aspectRatio = "3 / 1" ;
     display_movies(movie_list , "image_container");
     console.log(movie_list);
 }
@@ -113,7 +157,10 @@ function display_movies(movie_list , image_container_id){
         let div = document.createElement("div");
         div.innerHTML = `
         <div class="movie_overlay"></div>
-        <img src = ${movie.show.image.medium}>
+        <div style="width: 100%;height: 100%;display: flex; align-items: center; justify-content: center; ">
+            <div class="spinner-border text-warning" role="status"></div>
+        </div>
+        <img onload="stop_spinner(this)" src = ${movie.show.image.medium}>
         `;
         div.className = "movie_div";
         
@@ -135,7 +182,14 @@ function display_movies(movie_list , image_container_id){
     }
 }
 
+function stop_spinner(x){
+    x.previousElementSibling.style.display = "none";
+    x.style.display = "block";
+}
+
+
 function display_genre_movies(movie_list , image_container_id){
+    document.getElementById(image_container_id).innerHTML = ``;
     for(let i = 0; i < movie_list.results.length; i++){
         let div = document.createElement("div");
         console.log(movie_list.results[i].adult);
@@ -143,30 +197,40 @@ function display_genre_movies(movie_list , image_container_id){
             
             div.innerHTML = `
             <div class="movie_overlay"></div>
-            <img style="width: 210px; height: 295px; object-fit: cover;" src = "https://image.tmdb.org/t/p/w200/${movie_list.results[i].poster_path}" >
+            
+            <div style="width: 100%;height: 100%;display: flex; align-items: center; justify-content: center;">
+                <div class="spinner-border text-warning" role="status"></div>
+            </div>
+            <img onload="stop_spinner(this)" style="width: 210px; height: 295px; object-fit: cover; display: none;" src = "https://image.tmdb.org/t/p/w200/${movie_list.results[i].poster_path}" >
             `;
         }
         else{
 
             div.innerHTML = `
             <div class="movie_overlay"></div>
-            <img style="width: 210px; height: 295px; object-fit: cover;" src = "images/poster_image_placeholder.png" >
+            
+            <div style="width: 100%;height: 100%;display: flex; align-items: center; justify-content: center; ">
+                <div class="spinner-border text-warning" role="status"></div>
+            </div>
+            <img onload="stop_spinner(this)" style="width: 210px; height: 295px; object-fit: cover; display: none;" src = "images/poster_image_placeholder.png" >
+            <div class="imageless_name">${movie_list.results[i].title}</div>
             `;
         }
         div.className = "movie_div";
-        
         document.getElementById(image_container_id).append(div);
         div.addEventListener("mouseover" , () => {
-        div.querySelector("div").style.opacity = "0.7";
-        div.querySelector("div").innerHTML = `${movie_list.results[i].title}`;
+            div.querySelector(".movie_overlay").style.opacity = "0.7";
+            div.querySelector(".movie_overlay").innerHTML = `${movie_list.results[i].title}`;
+            console.log("ayooooooooo")
+            
         });
         
         div.addEventListener("mouseout" , () => {
-            div.querySelector("div").style.opacity = "0";
-            div.querySelector("div").innerHTML = ``;
+            div.querySelector(".movie_overlay").style.opacity = "0";
+            div.querySelector(".movie_overlay").innerHTML = ``;
             });
         
-        div.querySelector("div").addEventListener("click" , () => {
+        div.querySelector(".movie_overlay").addEventListener("click" , () => {
             console.log(movie_list);
             localStorage.setItem("tvmaze" , "false");
             display_movie_stats(movie_list.results[i]);
@@ -181,6 +245,7 @@ function display_genre_movies(movie_list , image_container_id){
 
 function change_movie_info_tvmaze(movie){
 
+    document.getElementById("rated_movie_backdrop").style.display = "none";
     if(movie.show.name != null){
         document.getElementById("rated_movie_name").textContent = movie.show.name;
     }
@@ -191,21 +256,21 @@ function change_movie_info_tvmaze(movie){
         document.getElementById("rated_movie_image").src = movie.show.image.medium;
     }
     if(movie.show.language != null){
-        document.getElementById("rated_movie_lang").textContent = "Language : " + movie.show.language;
+        document.getElementById("rated_movie_lang").innerHTML = `<span class="info_title">Language : </span> ${movie.show.language}`;
     }
     if(movie.show.type != null){
-        document.getElementById("rated_movie_type").textContent = "Type : " + movie.show.type;
+        document.getElementById("rated_movie_type").innerHTML = `<span class="info_title">Type : </span>  ${movie.show.type}`;
     }
     if(movie.show.summary != null){
-        document.getElementById("rated_movie_summery").innerHTML = "Summery : " + movie.show.summary;
+        document.getElementById("rated_movie_summery").innerHTML = `<span class="info_title">Summery : </span> ${movie.show.summary}`;
     }
     if(movie.show.webChannel != null){
-        document.getElementById("rated_movie_webchannel").textContent = "Web Channel : " + movie.show.webChannel.name;
+        document.getElementById("rated_movie_webchannel").innerHTML = `<span class="info_title">Web Channel : </span>  ${movie.show.webChannel.name}`;
     }
     if(movie.show.genres != null){
-        document.getElementById("rated_movie_genres").textContent = "Genres : ";
+        document.getElementById("rated_movie_genres").innerHTML = `<span  class="info_title">Genres : </span>`;
         for(let genre of movie.show.genres){
-            document.getElementById("rated_movie_genres").textContent += genre + ", ";
+            document.getElementById("rated_movie_genres").innerHTML += genre + ", ";
         }
     }
 
@@ -219,36 +284,62 @@ function change_movie_info_tvmaze(movie){
 
 function change_movie_info_tmdb(movie){
 
+    console.log(movie);
     if(movie.title  != null){
         document.getElementById("rated_movie_name").textContent = movie.title ;
     }
-    if(movie.poster_path != null){
-        document.getElementById("rated_movie_image").src = `https://image.tmdb.org/t/p/w200/${movie.poster_path}`;
+    if(movie.poster_path == null){
+        console.log(movie);
+        document.getElementById("rated_movie_image").src = "images/poster_image_placeholder.png";
     }
     else{
-        document.getElementById("rated_movie_image").src = "images/poster_image_placeholder";
+        document.getElementById("rated_movie_image").src = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
+
+    }
+    if(movie.backdrop_path != null){
+        document.getElementById("rated_movie_backdrop").style.display = "block";
+        document.getElementById("rated_movie_backdrop").src = `https://image.tmdb.org/t/p/w780/${movie.backdrop_path}`;
+
+    }
+    else{
+        document.getElementById("rated_movie_backdrop").style.display = "none";
     }
     if(movie.original_language != null){
-        document.getElementById("rated_movie_lang").textContent = "Language : " + movie.original_language;
+        document.getElementById("rated_movie_lang").innerHTML = `<span class="info_title">Language : </span>` + movie.original_language;
     }
-    if(movie.overview != null){
-        document.getElementById("rated_movie_summery").innerHTML = "Summery : " + movie.overview;
+    if(movie.original_title != null){
+        document.getElementById("rated_movie_lang").innerHTML = `<span class="info_title">Original Title : </span>` + movie.original_title;
+    }
+    if(movie.overview != null && movie.overview != ""){
+        document.getElementById("rated_movie_summery").innerHTML = `<span class="info_title">Summery : </span>` + movie.overview;
     }
     if(movie.genre_ids != null){
-        document.getElementById("rated_movie_genres").textContent = "Genres : ";
-        for(let genre_num of movie.results.genre_ids){
-            document.getElementById("rated_movie_genres").textContent += genre_num_to_name(genre_num);
+        document.getElementById("rated_movie_genres").innerHTML = `<span class="info_title">Genres : </span>`;
+        for(let genre_num of movie.genre_ids){
+            if(genre_num_to_name(genre_num) != "unknown"){
+
+                document.getElementById("rated_movie_genres").innerHTML += `${genre_num_to_name(genre_num)}, `;
+            }
         }
+        document.getElementById("rated_movie_genres").innerHTML = document.getElementById("rated_movie_genres").innerHTML.slice(0 , -2);
+    }
+    if(movie.vote_average != null && movie.vote_average != 0){
+        let rating_color;
+        if(movie.vote_average < 5){
+            rating_color = "ff0000";
+        }
+        else if(movie.vote_average < 7){
+            rating_color = "ffffff";
+        }
+        else{
+            rating_color = "FFD700";
+        }
+        document.getElementById("rated_movie_rating").innerHTML = `<span class="info_title">Rating : </span> <span style="color: #${rating_color};">${movie.vote_average}</span> /10`;
     }
 }
 
 
 function genre_num_to_name(genre_num){
-    const genres = {
-        28: "Action",
-        18: "Drama",
-        35: "Comedy",
-        27: "Horror"
-    };
-    return genres[genre_num] || "Unknown Genre";
+    
+    return genres[genre_num] || "unknown";
 }

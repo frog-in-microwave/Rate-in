@@ -11,7 +11,7 @@
 <body>
 
 
-
+  <div class="loader"></div> 
 
 
     <nav class="navbar navbar-expand-lg">
@@ -23,19 +23,19 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Action</a>
+                <a class="nav-link" href="index.html#action">Action</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Drama</a>
+                <a class="nav-link" href="index.html#drama">Drama</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Comedy</a>
+                <a class="nav-link" href="index.html#comedy">Comedy</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Horror</a>
+                <a class="nav-link" href="index.html#horror">Horror</a>
               </li>
               
             </ul>
@@ -54,14 +54,19 @@
 
     <main style="margin-top: 10vh;">
 
-        <img id="rated_movie_image">
         <h1 id="rated_movie_name"></h1>
-        <span style="font-weight: 800; font-size: 24;">Summery : </span><span id="rated_movie_summery"></span>
+        <div class="img_loader">
+          <div class="spinner-border text-warning" role="status"></div>
+        </div>
+        <img id="rated_movie_image" onload="stop_spinner(this)">
+        <p id="rated_movie_summery"></p>
         <h3 id="rated_movie_genres"></h3>
         <h3 id="rated_movie_lang"></h3>
+        <h3 id="original_title"></h3>
         <h3 id="rated_movie_type"></h3>
+        <img id="rated_movie_backdrop">
         <h3 id="rated_movie_webchannel"></h3>
-        <h2 id="rated_movie_rating"></h2>
+        <div id="rated_movie_rating"></div>
     </main>
 
 

@@ -5,6 +5,37 @@ body {
 }
 
 
+/* HTML: <div class="loader"></div> */
+.loader {
+    height: 30px;
+    aspect-ratio: 2.5;
+    --_g: no-repeat radial-gradient(farthest-side,#000 90%,#0000);
+    background: var(--_g), var(--_g), var(--_g), var(--_g);
+    background-size: 20% 50%;
+    animation: l44 1s infinite linear alternate; 
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 100vh;
+    width: 100%;
+    background-color: #000000;
+    color: #FFD700;
+  }
+  @keyframes l44 {
+    0%,
+    5%    {background-position: calc(0*100%/3) 50% ,calc(1*100%/3) 50% ,calc(2*100%/3) 50% ,calc(3*100%/3) 50% }
+    12.5% {background-position: calc(0*100%/3) 0   ,calc(1*100%/3) 50% ,calc(2*100%/3) 50% ,calc(3*100%/3) 50% }
+    25%   {background-position: calc(0*100%/3) 0   ,calc(1*100%/3) 0   ,calc(2*100%/3) 50% ,calc(3*100%/3) 50% }
+    37.5% {background-position: calc(0*100%/3) 100%,calc(1*100%/3) 0   ,calc(2*100%/3) 0   ,calc(3*100%/3) 50% }
+    50%   {background-position: calc(0*100%/3) 100%,calc(1*100%/3) 100%,calc(2*100%/3) 0   ,calc(3*100%/3) 0   }
+    62.5% {background-position: calc(0*100%/3) 50% ,calc(1*100%/3) 100%,calc(2*100%/3) 100%,calc(3*100%/3) 0   }
+    75%   {background-position: calc(0*100%/3) 50% ,calc(1*100%/3) 50% ,calc(2*100%/3) 100%,calc(3*100%/3) 100%}
+    87.5% {background-position: calc(0*100%/3) 50% ,calc(1*100%/3) 50% ,calc(2*100%/3) 50% ,calc(3*100%/3) 100%}
+    95%,
+    100%  {background-position: calc(0*100%/3) 50% ,calc(1*100%/3) 50% ,calc(2*100%/3) 50% ,calc(3*100%/3) 50% }
+  }
+
+
 .bi-film {
     font-size: 36px;
     margin: 2px 5px;
@@ -60,7 +91,9 @@ body {
     width: 100%;
     
 }
-
+.navbar-toggler-icon {
+    color: #FFD700 !important
+}
 .dropdown-menu {
     background-color: #121212;
     border: 3px solid #FFD700 ;
@@ -118,7 +151,7 @@ a {
     text-align: center;
     background-color: #E50914;
     border-style: none;
-    border-radius: 15px;
+    border-radius: 10px;
     color: #ffffff;
     font-size: 28px;
     font-weight: 800;
@@ -150,6 +183,9 @@ a {
     margin: auto 15px;
     aspect-ratio: 3 / 2;
 }
+#image_container {
+    aspect-ratio: auto;
+}
 .movie_overlay {
     background-color: rgb(0, 0, 0);
     opacity: 0;
@@ -168,8 +204,19 @@ a {
     transition: 0.2s;
     cursor: pointer;
     border: 3px solid #E50914;
+    z-index: 100;
 }
-
+.img_loader {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    width: 30%;
+    height: 33%;
+    margin: 20px;
+    float: left;
+    border: 5px solid #FFD700;
+    background-color: transparent;
+}
 
 .movie_div {
     position: relative;
@@ -177,21 +224,134 @@ a {
     width: 210px;
 }
 
+#rated_movie_image {
+    width: 30%;
+    margin: 20px;
+    float: left;
+    border: 5px solid #FFD700;
+}
+
+#rated_movie_name {
+    text-align: center;
+    color: #FFD700;
+    font-size: 64px;
+    font-weight: 700;
+    text-decoration: underline;
+    margin-top: 3vh;
+}
+
+.info_title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #E50914;
+}
+#rated_movie_summery {
+    font-size: 28px;
+    margin-top: 3vh;
+    margin-left: 15px;
+    margin-right: 15px;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 24;
+
+}
+
+
+ 
+
+
+#rated_movie_rating {
+    font-size: 32px;
+    margin-top: 3vh;
+    margin-left: 15px;
+    margin-right: 15px;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 24;
+}
+
+
+#original_title , #rated_movie_webchannel , #rated_movie_type , #rated_movie_lang , #rated_movie_genres{
+    font-size: 32px;
+    margin-top: 3vh;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 24;
+}
+
+#rated_movie_backdrop {
+    width: 30%;
+    margin: 20px;
+    float: right;
+    border: 5px solid #FFD700;
+}
+
+
 @media(max-width: 1315px){
     .image_container{
         grid-template-columns: repeat(4 , 1fr);
     }
+    #rated_movie_name {
+        font-size: 64px;
+        text-align: center;
+    }
 }
 
 @media(max-width: 1000px){
-    .image_container{
+    .image_container {
         grid-template-columns: repeat(3 , 1fr);
+    }
+    #rated_movie_image {
+        width: 38%;
+        float: left;
+        margin: 15px;
+    }
+    #rated_movie_backdrop {
+        width: 38%;
+        float: right;
+        margin: 15px;
+    }
+    #rated_movie_name {
+        font-size: 52px;
+        margin-top: 3vh;
     }
 }
 
 @media(max-width: 715px){
     .image_container{
         grid-template-columns: repeat(2 , 1fr);
+    }
+    #rated_movie_image {
+        width: 70%;
+        float: none;
+        margin: auto 15%;
+    }
+    #rated_movie_backdrop {
+        width: 70%;
+        float: none;
+        margin: auto 15%;
+    }
+    #rated_movie_name {
+        font-size: 48px;
+        color: #ffffff;
+    }
+    #hero_overlay h1{
+        font-size: 80px;
+    }
+    #hero_section {
+        height: 100vh;
+        width: 100%;
+        margin-top: 13vh;
+        position: relative;
+    }
+    .navbar {
+        position: fixed;
+        background-color: #121212;
+        top: 0%;
+        left: 0%;
+        height: 13vh;
+        width: 100%;
+        z-index: 1000;
     }
 }
 
@@ -200,24 +360,15 @@ a {
         grid-template-columns: repeat(1 , 1fr);
         gap: 2%;
     }
+    #rated_movie_name {
+        font-size: 42px;
+        margin-top: 12vh;
+        color: #ffffff;
+    }
+
 }
 
 
-#rated_movie_image {
-    width: 25%;
-    float: left;
-    margin: 15px;
-}
-
-#rated_movie_name {
-    font-size: 42px;
-    text-align: center;
-}
-
-
-#rated_movie_summery {
-    font-size: 20px;
-}
 
 
 #search_section {
@@ -262,4 +413,43 @@ a {
     background-color: #FFD700;
     color: #ffffff;
     border-color: #ffffff;
+}
+
+.change_genre {
+    background-color: #E50914;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    font-size: 28px;
+    font-weight: 500;
+    transition: 0.2s;
+    margin: 20px;
+}
+.change_genre:hover {
+    background-color: #ffffff;
+    color: #E50914;
+    border-color: #E50914;
+}
+
+.change_genre:active {
+    background-color: #FFD700;
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+
+
+.imageless_name {
+    position: absolute; 
+    top: 0%; 
+    left: 0%; 
+    width: 100%; 
+    height: 100%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #000000;
 }
