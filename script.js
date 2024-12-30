@@ -31,9 +31,9 @@ const genres = {
 
 
 
-window.addEventListener('load' , function(){
+window.onload = function(){
     document.getElementById("preloader").style.display = "none";
-});
+};
 
 
 if(window.location == "http://127.0.0.1:5500/movie_rating.html" || window.location == "https://ratin-movies.netlify.app/movie_rating.html"){
