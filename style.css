@@ -330,7 +330,7 @@ a {
 @media(max-width: 715px){
     .image_container{
         grid-template-columns: repeat(2 , 1fr);
-        gap: 1%;
+        gap: 1vw;
         margin-bottom: 10%;
     }
     #rated_movie_image {
@@ -370,7 +370,7 @@ a {
 @media(max-width: 460px){
     .image_container{
         grid-template-columns: repeat(1 , 1fr);
-        gap: 2%;
+        gap: 1vw;
     }
     #rated_movie_name {
         font-size: 42px;
