@@ -1,11 +1,15 @@
-let action_full = [];
-let drama_full = [];
-let comedy_full = [];
-let horror_full = [];
+
+
+// variable declaring section
+
 let action_movies = [];
 let drama_movies = [];
 let comedy_movies = [];
 let horror_movies = [];
+
+
+// each single movie genre in tdmb api has a number, this is basicaly the genre names with their respective numbers
+
 const genres = {
     28: "Action",
     12: "Adventure",
@@ -31,10 +35,21 @@ const genres = {
 
 
 
+// loader, the loading gif is there till the website loades
+
 window.onload = function(){
     document.getElementById("preloader").style.display = "none";
 };
 
+// this will fetch the movies based on their genres and display them in the suggestions section 
+
+pick_movies("action");
+pick_movies("drama");
+pick_movies("comedy");
+pick_movies("horror");
+
+// when the user clicks on a movie it takes them to another page. 
+// if the page the user is on is that page the code will get executed and the stats will be displayed
 
 if(window.location == "http://127.0.0.1:5500/movie_rating.html" || window.location == "https://ratin-movies.netlify.app/movie_rating.html"){
     if(localStorage.getItem("tvmaze") == "true"){
@@ -42,14 +57,24 @@ if(window.location == "http://127.0.0.1:5500/movie_rating.html" || window.locati
         console.log(JSON.parse(localStorage.getItem("movie_to_display_ratings")));
     }
     else{
-        change_movie_info_tmdb(JSON.parse(localStorage.getItem("movie_to_display_ratings")));
+        change_movie_info(JSON.parse(localStorage.getItem("movie_to_display_ratings")));
     }
 }
+
+
+
+// if the submitt button is clicked, it will fetch the movie via its name from the api
+
+
 document.getElementById("submit_button").addEventListener("click" , (event) => {
     event.preventDefault();
     document.getElementById("image_container").innerHTML = ``;
     fetch_it_up(document.getElementById("movie_name").value);
 });
+
+
+// if any of the change-genres button is clicked, it will call the pick_movies function which fetches movies 
+// from that same genre and displayes them again 
 
 document.getElementById("action_change_suggestion").addEventListener("click" , () => {
     
@@ -69,10 +94,6 @@ document.getElementById("horror_change_suggestion").addEventListener("click" , (
 })
 
 
-pick_movies("action");
-pick_movies("drama");
-pick_movies("comedy");
-pick_movies("horror");
 
 
 
@@ -91,8 +112,16 @@ pick_movies("horror");
 
 
 
+// the fetch_it_up section takes the movie name and fetches a list of objects containing movies with 
+// similar names from the api 
 async function fetch_it_up(movie_name) {
+
+    // awaiting the raw data
+
     let raw = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=bb6d40f1ec23736b063916ee085c0e95&query=${encodeURIComponent(movie_name)}`);
+    
+    // awaiting the raw dat to be transfered into a usable list
+    
     let movie_list = await raw.json();
     document.getElementById("image_container").style.aspectRatio = "3 / 2";
     display_genre_movies(movie_list , "image_container");
@@ -101,6 +130,12 @@ async function fetch_it_up(movie_name) {
 
 
 
+//based on the genre, the pick_movies function will fetch a list of movies randomly from the api
+
+// the api only allows for the use of lists of movies that are numbered less than 500 (idk why)
+
+// the 4 movie genres that are choosen for the suggestions section have more than 500 lists of movies in the tdmb api
+// so no need for a protection measure here
 
 async function pick_movies(genre) {
     if(genre == "action"){
@@ -139,7 +174,8 @@ async function pick_movies(genre) {
 
 
 
-
+// the display_movie_stats function puts the movie object in the local storage 
+// and transfers the user to the movie_rating.html
 
 function display_movie_stats(movie){
     localStorage.setItem("movie_to_display_ratings" , JSON.stringify(movie));
@@ -150,42 +186,23 @@ function display_movie_stats(movie){
 
 
 
-function display_movies(movie_list , image_container_id){
+// the stop_spinner function take an element as an argument and 
+// sets the display of the sibling just before it to none
 
-    for(let movie of movie_list){
-        let div = document.createElement("div");
-        div.innerHTML = `
-        <div class="movie_overlay"></div>
-        <div style="width: 100%;height: 100%;display: flex; align-items: center; justify-content: center; ">
-            <div class="spinner-border text-warning" role="status"></div>
-        </div>
-        <img onload="stop_spinner(this)" src = ${movie.show.image.medium}>
-        `;
-        div.className = "movie_div";
-        
-        document.getElementById(image_container_id).append(div);
-        div.addEventListener("mouseover" , () => {
-        div.querySelector("div").style.opacity = "0.7";
-        div.querySelector("div").innerHTML = `${movie.show.name}`;
-        });
-        
-        div.addEventListener("mouseout" , () => {
-            div.querySelector("div").style.opacity = "0";
-            div.querySelector("div").innerHTML = ``;
-            });
-            
-            div.querySelector("div").addEventListener("click" , () => {
-                localStorage.setItem("tvmaze" , "true");
-                display_movie_stats(movie);
-            });
-    }
+// this requires the spinner to be just before the element which is not a problem
+
+function stop_spinner(element){
+    element.previousElementSibling.style.display = "none";
+    element.style.display = "block";
 }
 
-function stop_spinner(x){
-    x.previousElementSibling.style.display = "none";
-    x.style.display = "block";
-}
 
+// the display movies function takes the movie list and the html container 
+// then creats a div for each movie in that list
+
+// the divs are subjected to event listeners so the movie name will show on mouse hover and disapear on mouse out
+
+// the div contains a bootstrap spinner that disapears via the stop spinner function called on the image load
 
 function display_genre_movies(movie_list , image_container_id){
     document.getElementById(image_container_id).innerHTML = ``;
@@ -220,7 +237,6 @@ function display_genre_movies(movie_list , image_container_id){
         div.addEventListener("mouseover" , () => {
             div.querySelector(".movie_overlay").style.opacity = "0.7";
             div.querySelector(".movie_overlay").innerHTML = `${movie_list.results[i].title}`;
-            console.log("ayooooooooo")
             
         });
         
@@ -242,50 +258,18 @@ function display_genre_movies(movie_list , image_container_id){
 
 
 
-function change_movie_info_tvmaze(movie){
 
-    document.getElementById("rated_movie_backdrop").style.display = "none";
-    if(movie.show.name != null){
-        document.getElementById("rated_movie_name").textContent = movie.show.name;
-    }
-    if(movie.show.image.original != null){
-        document.getElementById("rated_movie_image").src = movie.show.image.original;
-    }
-    else if(movie.show.image.medium != null){
-        document.getElementById("rated_movie_image").src = movie.show.image.medium;
-    }
-    if(movie.show.language != null){
-        document.getElementById("rated_movie_lang").innerHTML = `<span class="info_title">Language : </span> ${movie.show.language}`;
-    }
-    if(movie.show.type != null){
-        document.getElementById("rated_movie_type").innerHTML = `<span class="info_title">Type : </span>  ${movie.show.type}`;
-    }
-    if(movie.show.summary != null){
-        document.getElementById("rated_movie_summery").innerHTML = `<span class="info_title">Summery : </span> ${movie.show.summary}`;
-    }
-    if(movie.show.webChannel != null){
-        document.getElementById("rated_movie_webchannel").innerHTML = `<span class="info_title">Web Channel : </span>  ${movie.show.webChannel.name}`;
-    }
-    if(movie.show.genres != null){
-        document.getElementById("rated_movie_genres").innerHTML = `<span  class="info_title">Genres : </span>`;
-        for(let genre of movie.show.genres){
-            document.getElementById("rated_movie_genres").innerHTML += genre + ", ";
-        }
-    }
+// the change_movie_info_tmdb function just changes the innerhtml of the elements in the movie_rating.html 
 
 
 
-}
-
-
-
-
-
-function change_movie_info_tmdb(movie){
+function change_movie_info(movie){
 
     console.log(movie);
     if(movie.title  != null){
         document.getElementById("rated_movie_name").textContent = movie.title ;
+        document.getElementById("pirate_bay_download").style.display = "inline-block";
+        document.getElementById("pirate_bay_download").href = `https://thepiratebay10.info/search/${movie.title}/1/99/200`;
     }
     if(movie.poster_path == null){
         console.log(movie);
@@ -314,6 +298,9 @@ function change_movie_info_tmdb(movie){
     }
     if(movie.genre_ids != null){
         document.getElementById("rated_movie_genres").innerHTML = `<span class="info_title">Genres : </span>`;
+        
+        // display only known genres
+
         for(let genre_num of movie.genre_ids){
             if(genre_num_to_name(genre_num) != "unknown"){
 
@@ -322,6 +309,9 @@ function change_movie_info_tmdb(movie){
         }
         document.getElementById("rated_movie_genres").innerHTML = document.getElementById("rated_movie_genres").innerHTML.slice(0 , -2);
     }
+
+    // change the color based on how high the rating is
+
     if(movie.vote_average != null && movie.vote_average != 0){
         let rating_color;
         if(movie.vote_average < 5){
@@ -337,6 +327,7 @@ function change_movie_info_tmdb(movie){
     }
 }
 
+// if the genres.genre_num doesn't exist, then just return unkown (like in the todo list project)
 
 function genre_num_to_name(genre_num){
     

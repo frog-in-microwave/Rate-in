@@ -290,7 +290,6 @@ a {
     margin-right: 15px;
     color: #ffffff;
     font-weight: 600;
-    font-size: 24;
 }
 
 #rated_movie_backdrop {
@@ -299,7 +298,18 @@ a {
     float: right;
     border: 5px solid #FFD700;
 }
+#pirate_bay_download_button {
+    font-size: 28px;
+    margin-top: 3vh;
+    margin-left: 15px;
+    margin-right: 15px;
+    font-weight: 600;
+    float: right;
+}
 
+#pirate_bay_download {
+    display: none;
+}
 
 @media(max-width: 1315px){
     .image_container{
@@ -518,3 +528,6 @@ footer div h3 {
     text-decoration: underline;
     color: #FFD700;
 }
+
+
+

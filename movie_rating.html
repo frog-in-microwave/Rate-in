@@ -57,10 +57,7 @@
     <main style="margin-top: 10vh;">
 
         <h1 id="rated_movie_name"></h1>
-        <div class="img_loader">
-          <div class="spinner-border text-warning" role="status"></div>
-        </div>
-        <img id="rated_movie_image" onload="stop_spinner(this)">
+        <img id="rated_movie_image">
         <p id="rated_movie_summery"></p>
         <h3 id="rated_movie_genres"></h3>
         <h3 id="rated_movie_lang"></h3>
@@ -69,6 +66,11 @@
         <img id="rated_movie_backdrop">
         <h3 id="rated_movie_webchannel"></h3>
         <div id="rated_movie_rating"></div>
+        <div style="display: flex; align-items: center; justify-content: flex-start;">
+          <a id="pirate_bay_download" target="_blank">
+            <button id="pirate_bay_download_button" class="change_genre">Download From Pirate Bay</button>
+          </a>
+        </div>
     </main>
 
 
