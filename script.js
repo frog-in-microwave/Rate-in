@@ -265,7 +265,9 @@ function display_genre_movies(movie_list , image_container_id){
 
 function change_movie_info(movie){
 
-    console.log(movie);
+    // if the movie name exists, set the title a it 
+    // and make the link to pirate bay towards a video with the name of the movie
+    
     if(movie.title  != null){
         document.getElementById("rated_movie_name").textContent = movie.title ;
         document.getElementById("pirate_bay_download").style.display = "inline-block";
