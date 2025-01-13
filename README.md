@@ -4,10 +4,10 @@
 
 # Color Pallette Used:
  
- 1. #121212(eerie black) for the background
- 2. #E50914(Netflix Red) for some text, borders and button backgrounds
- 3. #FFD700(Gold) for text, borders, logos spinners and alot more
- 4. #ffffff(White) for text
+ 1. #121212 (Eerie black) for the background
+ 2. #E50914 (Netflix Red) for some text, borders and button backgrounds
+ 3. #FFD700 (Gold) for text, borders, logos spinners and alot more
+ 4. #ffffff (White) for text
 
  These colors create a cenimatic feel that fits perfectly with this website's theme.
 
