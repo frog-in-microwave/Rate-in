@@ -18,8 +18,4 @@
  1. Working with an API and specificaly the TMDB api that returns a list of 20 movie objects.
  2. Using Bootstarp spinners to load the movie images rather than make them pop out of nowere.
  3. Adding privacy polaci and terms of service in the footer which makes the website far more authentic
-<<<<<<< HEAD
  4. Adding an a dynamic external link to pirate bay so the user is able to download the movie whatever it is from pirate bay 
-=======
- 4. Adding an a dynamic external link to pirate bay so the user is able to download the movie whatever it is from pirate bay 
->>>>>>> 857c5810791929c9f454891ebbc16f651f2d6702

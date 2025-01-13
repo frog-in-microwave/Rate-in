@@ -51,7 +51,7 @@ pick_movies("horror");
 // when the user clicks on a movie it takes them to another page. 
 // if the page the user is on is that page the code will get executed and the stats will be displayed
 
-if(window.location == "http://127.0.0.1:5500/movie_rating.html" || window.location == "https://ratin-movies.netlify.app/movie_rating.html"){
+if(window.location == "http://127.0.0.1:5501/movie_rating.html" || window.location == "https://ratin-movies.netlify.app/movie_rating.html"){
     if(localStorage.getItem("tvmaze") == "true"){
         change_movie_info_tvmaze(JSON.parse(localStorage.getItem("movie_to_display_ratings")));
         console.log(JSON.parse(localStorage.getItem("movie_to_display_ratings")));
